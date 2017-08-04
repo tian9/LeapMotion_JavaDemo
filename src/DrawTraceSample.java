@@ -344,7 +344,7 @@ class DrawTraceSample extends JFrame implements ActionListener{
 
 		if (!userData.isEmpty()){
 			System.out.print("The existing users are: ");
-			for (int i = 0 ; i < userData.size()-1; i++)
+			for (int i = 0 ; i < userData.size() - 1; i++)
 				System.out.print(userData.get(i).userName + ", "); 
 			System.out.println(userData.get(userData.size()-1).userName + "."); 
 		}

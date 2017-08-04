@@ -30,7 +30,9 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -56,7 +58,7 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 
 	//Global variables
 	static OneGesture oneGesture = new OneGesture();
-	static ArrayList<OneHandFrame> handFrameList;
+	static List<OneHandFrame> handFrameList;
 	static ArrayList<OneHandFrame> handFrameListStr;
 
 	static boolean isVerified = false;
@@ -297,9 +299,19 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	}
 	private static void writeMoreToFile(int gestureIndex){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		
+		Calendar calendar = Calendar.getInstance();
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int mininute = calendar.get(Calendar.MINUTE);
+		int sec = calendar.get(Calendar.SECOND);
+		//System.out.println("hours " + hour + ", " + mininute +  " " + sec);
+		
 		Date date = new Date();
 		String ds = dateFormat.format(date);
 		String ds1 = ds.substring(0, 4) + ds.substring(5, 7) + ds.substring(8);
+		System.out.println("before: " + ds1);
+		ds1 = ds1 + "_" + String.format("%2d%2d%2d" , hour, mininute, sec);
+		System.out.println("after:" + ds1);
 		System.out.println(); //2014/08/06 15:59:48
 		
 		File fileName2 = new File(savePath +  userName.toLowerCase() +"_" +  ds1  + "_Frame_" + gestureIndex + ".txt");
@@ -328,9 +340,20 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	}
 	private static void writeMoreToFile(){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar calendar = Calendar.getInstance();
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int mininute = calendar.get(Calendar.MINUTE);
+		int sec = calendar.get(Calendar.SECOND);
+		
 		Date date = new Date();
 		String ds = dateFormat.format(date);
 		String ds1 = ds.substring(0, 4) + ds.substring(5, 7) + ds.substring(8);
+		System.out.println("before: " + ds1);
+		ds1 = ds1 + "_" + String.format("%2d%2d%2d" , hour, mininute, sec);
+		System.out.println("after:" + ds1);
+		
+		
+		//ds1 += "_" + hour + mininute +sec;
 		System.out.println(); //2014/08/06 15:59:48
 		
 		File fileName2 = new File(savePath +  userName.toLowerCase() +"_" +  ds1  + "_Frame.txt");
@@ -381,7 +404,7 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 		}
 	} // end startKey
 
-	 static void finishKey(){
+	 static void finishKey() throws IOException{
 		if (controller!= null && userName.length() >= 1){
 			controller.removeListener(listener);				
 
@@ -393,10 +416,27 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 				if (reply ==  JOptionPane.YES_OPTION){
 					//count #signatures for each user when they finished.
 					sigNum ++;
+					int gsindex = LeapWriteWin.FRAME_DATA.size();
+					
+					/**
+					 *the new similarity calculation
+					 */
+					Similarity similarity = new Similarity(oneGesture,savePath, userName.toLowerCase(), gsindex);
+					String disT = String.format("Current Similarity: %.2f, Ideal Similarity: %.2f", similarity.dis, similarity.indis);
+					if (similarity.disAll.size() == 0 || similarity.dis < similarity.disAll.get(Similarity.disAll.size() - 1)) {
+						System.out.println("***********Closer************");
+						
+					} else {
+						System.out.println("***********Faster************");
+					}
+					System.out.println("dis: " + disT);
+					
+					
 					/*
 					 * raw data
 					 */
 					Date d = new Date(); long before = d.getTime();
+					
 
 					String contentFrame = oneGesture.toStringFrame();
 					
@@ -450,7 +490,6 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 						try {
 							TableDTW.addTable(LeapWriteDemo.tableFile, TableDTW.totalSeqNum, currentSig.readLines());
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 
@@ -565,7 +604,12 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 		} 
 		else if (e.getActionCommand().equals("Finish(F8)")){
 			//lblResultsYouHave.setText("Finished!");
-			finishKey();
+			try {
+				finishKey();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} //end the finish 
 		else if(e.getActionCommand().equals("Next Gesture")){
 			int gsindex = LeapWriteWin.FRAME_DATA.size();
@@ -645,7 +689,7 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	private static void start(){
 		oneGesture = new OneGesture();
 		handFrameList = oneGesture.handFrameList;
-		handFrameListStr = oneGesture.handFrameStrList;
+		//handFrameListStr = oneGesture.handFrameStrList;
 
 	}	// end start()
 

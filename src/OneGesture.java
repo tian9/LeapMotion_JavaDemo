@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class OneGesture {
 
-	ArrayList<OneHandFrame> handFrameList;	
-	ArrayList<OneHandFeature> handFeatureList;
-	ArrayList<OneHandFrame> handFrameStrList;
+	List<OneHandFrame> handFrameList;	
+	List<OneHandFeature> handFeatureList;
 	static float[][] handFeatureNormed;
-
+	public OneGesture(List<OneHandFrame> handFrameList){
+		this.handFrameList = handFrameList;
+	}
 	public OneGesture(){
 		//Initialize 
 		handFrameList = new ArrayList<OneHandFrame>();
-		handFrameStrList = new ArrayList<OneHandFrame>();
 		handFeatureList = new ArrayList<OneHandFeature>();
 
 
@@ -26,7 +27,7 @@ public class OneGesture {
 
 
 
-	public ArrayList<OneFrame> preProcess(ArrayList<OneFrame> sig){
+	public List<OneFrame> preProcess(ArrayList<OneFrame> sig){
 		//to-do:
 		//preprocessing		
 		return sig;
@@ -165,7 +166,7 @@ public class OneGesture {
 	 * @return an two dimensional array with #Frames X #features dimension
 	 */
 
-	private float[][] dataNorm(ArrayList<OneHandFeature> handFeature){
+	private float[][] dataNorm(List<OneHandFeature> handFeature){
 
 		int sizeSig = handFeature.size();
 		int featureDim = handFeature.get(0).handFeatureDim;

@@ -2,6 +2,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 
@@ -34,7 +35,6 @@ public class LeapWriteDemo {
 		LeapWriteWin loginWin =  new LeapWriteWin( );
 		loginWin.frameDesign();
 		loginWin.setVisible(true);
-		//loginWin.pack();
 		loginWin.setLocationRelativeTo(null);
 		
 		// for shortcut of finish and start button
@@ -44,7 +44,13 @@ public class LeapWriteDemo {
 						if(e.getID() == KeyEvent.KEY_PRESSED)  
 						{  
 							if(e.getKeyCode() == KeyEvent.VK_F4 ) DrawMultiFigure.startKey();  
-							if(e.getKeyCode() == KeyEvent.VK_F8 ) DrawMultiFigure.finishKey();
+							if(e.getKeyCode() == KeyEvent.VK_F8 )
+								try {
+									DrawMultiFigure.finishKey();
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 						}  
 						return false;}}); 
 

@@ -216,11 +216,9 @@ public class OneSig {
 	public float calDTW(float[][] anotherSig){
 		//to-do:
 		//calculate DTW disthance between this signature and another signature
-		float dtwDis =  0;
 		
 		DTW dtw = new DTW(sigFeatureNormed, anotherSig);
-		dtwDis = dtw.dpDistance();		
-		return dtwDis;
+		return dtw.costValue;
 		
 	}
 	

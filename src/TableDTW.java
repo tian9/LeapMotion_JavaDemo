@@ -118,7 +118,7 @@ public class TableDTW {
 
 		}// end for
 
-		TableDTW.totalSeqNum --;
+		TableDTW.totalSeqNum--;
 		
 
 	}

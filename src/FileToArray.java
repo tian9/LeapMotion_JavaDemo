@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +9,8 @@ import java.util.List;
 /**
  * 
  * @author 
- * The class is just converted saved file (Normed Features) into arrays
+ * The class is just converted saved file (Normed Features) 
+ * into arrays
  *
  */
 public class FileToArray {
@@ -18,8 +18,7 @@ public class FileToArray {
 	String filename ;
 	int featureDim;
 	float[][] floatArray;
-
-
+	
 	public FileToArray(String savePath, String userName, String passCode, int sigNum){
 
 		this.filename = savePath +  userName.toLowerCase() + "_" 
@@ -34,8 +33,6 @@ public class FileToArray {
 
 
 	public float[][] readLines() throws IOException {
-
-
 		FileReader fileReader = new FileReader(filename);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<String> lines = new ArrayList<String>();
@@ -50,13 +47,11 @@ public class FileToArray {
 		String[] fileString = lines.toArray(new String[lines.size()]);
 		
 		featureDim = fileString[0].split(",").length -1;
-		//System.out.println("FeatureDim is:  " + featureDim);
 		
 		floatArray = new float[fileString.length - 1][featureDim];
 
 		for (int i = 0; i < fileString.length - 1; i++){
 			String[] lineString = fileString[i].split(",");
-			//System.out.println(lineString.length);
 			for (int j = 0; j < featureDim; j++){
 				floatArray[i][j] = Float.parseFloat(lineString[j]); 
 			}
