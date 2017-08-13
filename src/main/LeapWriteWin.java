@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -165,7 +166,7 @@ public class LeapWriteWin extends JFrame implements ActionListener
 
 			//load the feature.
 			if (returnUser) {
-				String path = "C:\\Users\\jingtian\\workspace\\leap_DEMO\\MultiFinger\\train\\feature\\";
+				String path = "C:\\Users\\jingtian\\workspace\\leap_DEMO\\MultiFinger\\train\\feature";
 				try {
 					loadFeautre(path, userName, featureDimension);
 				} catch (IOException e1) {
@@ -261,17 +262,35 @@ public class LeapWriteWin extends JFrame implements ActionListener
 	
 	private void loadFeautre(String path, String username, int featureDim) throws IOException {
 		// TODO Auto-generated method stub
-		
+		File folder = new File(path);
 		map = new HashMap<>();
 		for (int i = 0; i < 8; i++) {
 			map.put(i, new ArrayList<List<Double[]>>());
-			File folder = new File(path + i + "\\");
-		
-			File[] files = folder.listFiles();
-			for (File f : files) {
-				if (f.getName().contains(username)) {
-						map.get(i).add(loadAFile(f,featureDim));
-				}
+		}
+		File[] files = folder.listFiles();
+		for (File f : files) {
+			if (f.getName().contains(username)) {
+				if (f.getName().contains("_0_")) {
+					map.get(0).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_1_")) {
+					map.get(1).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_2_")) {
+					map.get(2).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_3_")) {
+					map.get(3).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_0_")) {
+					map.get(0).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_4_")) {
+					map.get(4).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_5_")) {
+					map.get(5).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_6_")) {
+					map.get(6).add(loadAFile(f,featureDim));
+				} else if (f.getName().contains("_7_")) {
+					map.get(7).add(loadAFile(f,featureDim));
+				} 
+			} else {
+				System.out.println("User Does NOT exist!");
 			}
 			
 		}
