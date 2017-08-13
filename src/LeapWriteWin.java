@@ -165,9 +165,9 @@ public class LeapWriteWin extends JFrame implements ActionListener
 
 			//load the feature.
 			if (returnUser) {
-				String path = "C:\\Users\\jingtian\\workspace\\leap_DEMO\\MultiFinger\\train\\feature\\";
+				String datapath = "C:\\jing2017\\data\\train\\feature\\";
 				try {
-					loadFeautre(path, userName, featureDimension);
+					loadFeautre(datapath, userName, featureDimension);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
