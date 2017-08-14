@@ -350,9 +350,9 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 		Date date = new Date();
 		String ds = dateFormat.format(date);
 		String ds1 = ds.substring(0, 4) + ds.substring(5, 7) + ds.substring(8);
-		System.out.println("before: " + ds1);
+		//System.out.println("before: " + ds1);
 		ds1 = ds1 + "_" + String.format("%2d%2d%2d" , hour, mininute, sec);
-		System.out.println("after:" + ds1);
+		//System.out.println("after:" + ds1);
 		
 		
 		//ds1 += "_" + hour + mininute +sec;
@@ -442,17 +442,21 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 						dis += temp;
 					}
 					dis /= cntt;
-					
+					LeapWriteWin.sb.append(dis).append(',');
 					System.out.println("Distance: " + predis + " , "+ dis);
 			        //calculate
 					if (dis - LeapWriteWin.DTW_TH < 0.1) {
 						lblFeedback.setText("Good Job");
+						LeapWriteWin.sb.append("First").append('\n');
 					} else if (Math.abs(dis - predis) <= 500){
 						lblFeedback.setText("Good Job, Keep trying");
+						LeapWriteWin.sb.append(0).append('\n');
 					} else if (dis < predis){
 						lblFeedback.setText("Great!!");
+						LeapWriteWin.sb.append(+1).append('\n');
 					} else {
 						lblFeedback.setText("Try Again!");
+						LeapWriteWin.sb.append(-1).append('\n');
 					}
 					predis = dis;
 					//
@@ -652,11 +656,13 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 			int gsindex = LeapWriteWin.FRAME_DATA.size();
 			LeapWriteWin.FRAME_DATA.add(new ArrayList<String>(OneGestureDataFrame));
 			writeMoreToFile(gsindex);
+			String fNameFeedback = LeapWriteWin.savePath + userName + "_feedback_" + gsindex; 
+			writeToFile(LeapWriteWin.sb.toString(), new File(fNameFeedback));
 			OneGestureDataFrame.clear();
 			LeapWriteWin.DTW_TH = 20;
 			lblFeedback.setText("Try");
 			lblSample.setText("enrolled 0 sample");
-			
+			LeapWriteWin.sb.append(gsindex).append('\n');
 			switch(gsindex + 1){
 			case 1:
 				lblGesture.setText("Swipe hand (e.g., swipe a page)"); break;
@@ -718,6 +724,8 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	} // end actionPerformed
 
 
+
+	
 
 	/**
 	 * start() 

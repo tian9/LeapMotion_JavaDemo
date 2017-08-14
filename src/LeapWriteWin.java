@@ -43,7 +43,7 @@ public class LeapWriteWin extends JFrame implements ActionListener
 	int featureDimension = 115;
 	boolean returnUser = true;
 	static String datapath = "C:\\jing2017\\data\\train\\feature\\";
-	
+	static StringBuilder sb = new StringBuilder();
 	public LeapWriteWin( )
 	{
 		; 
@@ -149,7 +149,7 @@ public class LeapWriteWin extends JFrame implements ActionListener
 
 		if (e.getActionCommand( ).equals("Proceed[Enter]")){
 
-			
+			sb.append(userName).append('\n').append(0).append('\n');
 			File newDir = new File(savePath);
 			if (!newDir.exists()){
 				newDir.mkdirs();
