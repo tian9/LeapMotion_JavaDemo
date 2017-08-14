@@ -43,7 +43,7 @@ public class LeapWriteDemo {
 					public boolean dispatchKeyEvent(KeyEvent e){  
 						if(e.getID() == KeyEvent.KEY_PRESSED)  
 						{  
-							if(e.getKeyCode() == KeyEvent.VK_F4 ) DrawMultiFigure.startKey();  
+							if(e.getKeyCode() == KeyEvent.VK_F7 ) DrawMultiFigure.startKey();  
 							if(e.getKeyCode() == KeyEvent.VK_F8 )
 								try {
 									DrawMultiFigure.finishKey();

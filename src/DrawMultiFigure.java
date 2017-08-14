@@ -94,17 +94,17 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	public static Color bkGround = UIManager.getColor("InternalFrame.activeTitleGradient");
 	
 	static ArrayList<String> OneGestureDataFrame = new ArrayList<String>();
-	
+	static double predis = LeapWriteWin.DTW_TH;
+
 
 	public DrawMultiFigure(){	
-
 		textField = new JTextField();
 		textField.setVisible(false);
 		btnVerify = new JButton("Logout(Admin)");
 		btnNextGesture = new JButton("Next Gesture");
 		rdbtnV = new JRadioButton("Verification");
 		rdbtnE = new JRadioButton("Enrollment");
-		btnStart = new JButton("Start(F4)");
+		btnStart = new JButton("Start(F7)");
 		btnEnd = new JButton("Finish(F8)");
 		lblUsername = new JLabel("UserName");
 		lblUsername.setVisible(false);
@@ -276,7 +276,7 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 		lblSample.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
 		txtpnInstruction.setText("Instruction: \n" +
-				"1)   Press \"Start(F4)\" button and start a gesture \n   --  Put your hand above the device until the gray area shows some dots. \n\n" +
+				"1)   Press \"Start(F7)\" button and start a gesture \n   --  Put your hand above the device until the gray area shows some dots. \n\n" +
 				"2)   Finished,please click \"Finish(F8)\".\n\n" + 
 				"3)   Comfirm or refuse the sample after a pop massage.\n\n" + 
 				"4)   Press \"next Gesture\".\n\n" +
@@ -429,10 +429,10 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 					TimeSeries tsI = new TimeSeries(oneGesture.getNormedFeature());
 					
 					// calculate dtw distance.
-					double predis = LeapWriteWin.DTW_TH;
+					
 					double dis = 0;
 					int cntt = 0;
-					File files = new File(LeapWriteWin.savePath + "train\\feature\\" + gsindex);
+					File files = new File(LeapWriteWin.datapath  + gsindex);
 					
 					for (File file : files.listFiles()) {
 						if (!file.getName().contains(userName)) continue;
@@ -442,18 +442,19 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 						dis += temp;
 					}
 					dis /= cntt;
-					predis = dis;
+					
+					System.out.println("Distance: " + predis + " , "+ dis);
 			        //calculate
 					if (dis - LeapWriteWin.DTW_TH < 0.1) {
 						lblFeedback.setText("Good Job");
 					} else if (Math.abs(dis - predis) <= 500){
 						lblFeedback.setText("Good Job, Keep trying");
-					} else if (dis > predis){
-						lblFeedback.setText("Great Job!!");
+					} else if (dis < predis){
+						lblFeedback.setText("Great!!");
 					} else {
-						lblFeedback.setText("Please Try Again!");
+						lblFeedback.setText("Try Again!");
 					}
-
+					predis = dis;
 					//
 					
 					/*
@@ -634,7 +635,7 @@ class DrawMultiFigure extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		// calculate the whole DTWdistance Table
-		if(e.getActionCommand().equals("Start(F4)")){
+		if(e.getActionCommand().equals("Start(F7)")){
 			
 			startKey();
 		} 

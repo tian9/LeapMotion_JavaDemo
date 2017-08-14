@@ -96,7 +96,7 @@ class DrawTraceSample extends JFrame implements ActionListener{
 		btnVerify = new JButton("Logout");
 		rdbtnV = new JRadioButton("Verification");
 		rdbtnE = new JRadioButton("Enrollment");
-		btnStart = new JButton("Start(F4)");
+		btnStart = new JButton("Start(F7)");
 		btnEnd = new JButton("Finish(F8)");
 		lblUsername = new JLabel("UserName");
 		lblUsername.setVisible(false);
@@ -122,7 +122,7 @@ class DrawTraceSample extends JFrame implements ActionListener{
 			public boolean dispatchKeyEvent(KeyEvent e){  
 				if(e.getID() == KeyEvent.KEY_PRESSED)  
 				{  
-					if(e.getKeyCode() == KeyEvent.VK_F4 ) startKey();  
+					if(e.getKeyCode() == KeyEvent.VK_F7 ) startKey();  
 					if(e.getKeyCode() == KeyEvent.VK_F8 ) finishKey();
 				}  
 				return false;}});*/
@@ -558,7 +558,7 @@ class DrawTraceSample extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		// calculate the whole DTWdistance Table
-		if(e.getActionCommand().equals("Start(F4)")){
+		if(e.getActionCommand().equals("Start(F7)")){
 			startKey();
 		}
 

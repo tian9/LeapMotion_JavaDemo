@@ -42,6 +42,7 @@ public class LeapWriteWin extends JFrame implements ActionListener
 	//LeapWriteWin loginWin;
 	int featureDimension = 115;
 	boolean returnUser = true;
+	static String datapath = "C:\\jing2017\\data\\train\\feature\\";
 	
 	public LeapWriteWin( )
 	{
@@ -165,7 +166,7 @@ public class LeapWriteWin extends JFrame implements ActionListener
 
 			//load the feature.
 			if (returnUser) {
-				String datapath = "C:\\jing2017\\data\\train\\feature\\";
+				
 				try {
 					loadFeautre(datapath, userName, featureDimension);
 				} catch (IOException e1) {

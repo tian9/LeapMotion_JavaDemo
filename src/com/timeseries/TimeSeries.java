@@ -64,7 +64,11 @@ public class TimeSeries
 			timeReadings.add(new Double(currCol));
 			double[] arr = new double[input[0].length];
 			for (int i = 0; i < input[0].length; ++i) {
-				arr[i] = (double)input[currCol][i];
+				if (Float.isNaN(input[currCol][i])) {
+					arr[i] = 0;
+				} else {
+					arr[i] = (double)input[currCol][i];
+				}
 			}
 			
 			final TimeSeriesPoint readings = new TimeSeriesPoint(arr);
